@@ -48,7 +48,7 @@ struct SendAlert: AsyncParsableCommand {
 
         // Defer shutdown
         defer {
-            client.shutdown { _ in print("Failed to shutdown APNSClient") }
+            try? client.syncShutdown()
         }
 
         // Send the notification
