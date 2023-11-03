@@ -63,7 +63,7 @@ struct SendAlert: AsyncParsableCommand {
                 expiration: .immediately,
                 priority: .immediately,
                 topic: sendOptions.topic,
-                payload: EmptyPayload(), // TODO
+                payload: sendOptions.decodedPayload(),
                 sound: isSoundEnable ? .default : nil
             ),
             deviceToken: sendOptions.deviceToken

@@ -32,7 +32,7 @@ struct SendBackground: AsyncParsableCommand {
             .init(
                 expiration: .immediately,
                 topic: sendOptions.topic,
-                payload: EmptyPayload() // TODO
+                payload: sendOptions.decodedPayload()
             ),
             deviceToken: sendOptions.deviceToken
         )

@@ -1,5 +1,6 @@
 import Foundation
 import ArgumentParser
+import AnyCodable
 
 struct Send: ParsableCommand {
 
@@ -55,5 +56,16 @@ struct Send: ParsableCommand {
             help: "The device token."
         )
         var deviceToken: String
+
+        @Argument(
+            help: "The notification payload (JSON formatted)."
+        )
+        var payload: String?
+
+        func decodedPayload() throws -> [String: AnyCodable] {
+            guard let payload else { return [:] }
+            let data = payload.data(using: .utf8) ?? Data()
+            return try JSONDecoder().decode([String: AnyCodable].self, from: data)
+        }
     }
 }
