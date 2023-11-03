@@ -22,6 +22,11 @@ struct SendBackground: AsyncParsableCommand {
         // Create the APNS client
         let client = try await APNSClient(options: sendOptions)
 
+        // Defer shutdown
+        defer {
+            client.shutdown { _ in print("Failed to shutdown APNSClient") }
+        }
+
         // Send the notification
         try await client.sendBackgroundNotification(
             .init(
@@ -33,7 +38,6 @@ struct SendBackground: AsyncParsableCommand {
         )
 
         // Exit the command
-        try client.syncShutdown()
         throw CleanExit.message("Sent push notification.")
     }
 }

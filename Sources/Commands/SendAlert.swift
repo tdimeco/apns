@@ -46,6 +46,11 @@ struct SendAlert: AsyncParsableCommand {
         // Create the APNS client
         let client = try await APNSClient(options: sendOptions)
 
+        // Defer shutdown
+        defer {
+            client.shutdown { _ in print("Failed to shutdown APNSClient") }
+        }
+
         // Send the notification
         try await client.sendAlertNotification(
             .init(
@@ -65,7 +70,6 @@ struct SendAlert: AsyncParsableCommand {
         )
 
         // Exit the command
-        try client.syncShutdown()
         throw CleanExit.message("Sent push notification.")
     }
 }
