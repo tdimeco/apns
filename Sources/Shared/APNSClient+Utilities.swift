@@ -3,10 +3,10 @@ import APNS
 
 extension APNSClient<JSONDecoder, JSONEncoder> {
 
-    /// Init a client using the given send options.
+    /// Init a client using the given target options.
     ///
-    /// - Parameter options: The options.
-    convenience init(options: Send.Options) async throws {
+    /// - Parameter options: The target options.
+    convenience init(options: Send.TargetOptions) async throws {
 
         // Read the private key
         let privateKey = try await options.keyURL.readContent()

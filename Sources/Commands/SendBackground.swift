@@ -13,14 +13,15 @@ struct SendBackground: AsyncParsableCommand {
 
     // MARK: Options
 
-    @OptionGroup var sendOptions: Send.Options
+    @OptionGroup(title: "Target Device Options") var targetOptions: Send.TargetOptions
+    @OptionGroup var payloadOptions: Send.PayloadOptions
 
     // MARK: Execution
 
     func run() async throws {
 
         // Create the APNS client
-        let client = try await APNSClient(options: sendOptions)
+        let client = try await APNSClient(options: targetOptions)
 
         // Defer shutdown
         defer {
@@ -31,13 +32,13 @@ struct SendBackground: AsyncParsableCommand {
         try await client.sendBackgroundNotification(
             .init(
                 expiration: .immediately,
-                topic: sendOptions.topic,
-                payload: sendOptions.decodedPayload()
+                topic: targetOptions.topic,
+                payload: payloadOptions.decodedPayload()
             ),
-            deviceToken: sendOptions.deviceToken
+            deviceToken: targetOptions.deviceToken
         )
 
         // Exit the command
-        throw CleanExit.message("Sent push notification.")
+        throw CleanExit.message("Background push notification has been sent successfully!")
     }
 }

@@ -8,7 +8,7 @@ struct Send: ParsableCommand {
 
     static var configuration = CommandConfiguration(
         commandName: "send",
-        abstract: "Send a push notification.",
+        abstract: "Send a push notification to a device.",
         subcommands: [
             SendAlert.self,
             SendBackground.self
@@ -18,7 +18,7 @@ struct Send: ParsableCommand {
 
     // MARK: Options
 
-    struct Options: ParsableArguments {
+    struct TargetOptions: ParsableArguments {
 
         @Flag(
             name: [.customShort("p"), .customLong("production")],
@@ -28,20 +28,20 @@ struct Send: ParsableCommand {
 
         @Option(
             name: [.customShort("k"), .customLong("key-file")],
-            help: "The private key file.",
+            help: .init("The private key file.", valueName: "file"),
             transform: URL.init(fileURLWithPath:)
         )
         var keyURL: URL
 
         @Option(
             name: .customLong("key-id"),
-            help: "The private key identifier."
+            help: .init("The private key identifier.", valueName: "id")
         )
         var keyId: String
 
         @Option(
             name: .customLong("team-id"),
-            help: "The app team identifier."
+            help: .init("The app team identifier.", valueName: "id")
         )
         var teamId: String
 
@@ -53,13 +53,14 @@ struct Send: ParsableCommand {
 
         @Option(
             name: [.customShort("d"), .customLong("device-token")],
-            help: "The device token."
+            help: .init("The device token.", valueName: "token")
         )
         var deviceToken: String
+    }
 
-        @Argument(
-            help: "The notification payload (JSON formatted)."
-        )
+    struct PayloadOptions: ParsableArguments {
+
+        @Argument(help: "The notification payload (JSON formatted).")
         var payload: String?
 
         func decodedPayload() throws -> [String: AnyCodable] {

@@ -13,38 +13,43 @@ struct SendAlert: AsyncParsableCommand {
 
     // MARK: Options
 
-    @OptionGroup var sendOptions: Send.Options
+    struct AlertOptions: ParsableArguments {
 
-    @Option(
-        name: .customLong("title"),
-        help: "The notification title."
-    )
-    var title: String?
+        @Option(
+            name: .customLong("title"),
+            help: "The notification title."
+        )
+        var title: String?
 
-    @Option(
-        name: .customLong("subtitle"),
-        help: "The notification subtitle."
-    )
-    var subtitle: String?
+        @Option(
+            name: .customLong("subtitle"),
+            help: "The notification subtitle."
+        )
+        var subtitle: String?
 
-    @Option(
-        name: .customLong("body"),
-        help: "The notification body."
-    )
-    var body: String?
+        @Option(
+            name: .customLong("body"),
+            help: "The notification body."
+        )
+        var body: String?
 
-    @Flag(
-        name: .customLong("sound"),
-        help: "Enable the default alert sound."
-    )
-    var isSoundEnable = false
+        @Flag(
+            name: .customLong("sound"),
+            help: "Enable the default alert sound."
+        )
+        var isSoundEnable = false
+    }
+
+    @OptionGroup(title: "Target Device Options") var targetOptions: Send.TargetOptions
+    @OptionGroup(title: "Alert Notification Options") var alertOptions: AlertOptions
+    @OptionGroup var payloadOptions: Send.PayloadOptions
 
     // MARK: Execution
 
     func run() async throws {
 
         // Create the APNS client
-        let client = try await APNSClient(options: sendOptions)
+        let client = try await APNSClient(options: targetOptions)
 
         // Defer shutdown
         defer {
@@ -55,21 +60,21 @@ struct SendAlert: AsyncParsableCommand {
         try await client.sendAlertNotification(
             .init(
                 alert: .init(
-                    title: title.map { .raw($0) },
-                    subtitle: subtitle.map { .raw($0) },
-                    body: body.map { .raw($0) },
+                    title: alertOptions.title.map { .raw($0) },
+                    subtitle: alertOptions.subtitle.map { .raw($0) },
+                    body: alertOptions.body.map { .raw($0) },
                     launchImage: nil
                 ),
                 expiration: .immediately,
                 priority: .immediately,
-                topic: sendOptions.topic,
-                payload: sendOptions.decodedPayload(),
-                sound: isSoundEnable ? .default : nil
+                topic: targetOptions.topic,
+                payload: payloadOptions.decodedPayload(),
+                sound: alertOptions.isSoundEnable ? .default : nil
             ),
-            deviceToken: sendOptions.deviceToken
+            deviceToken: targetOptions.deviceToken
         )
 
         // Exit the command
-        throw CleanExit.message("Sent push notification.")
+        throw CleanExit.message("Alert push notification has been sent successfully!")
     }
 }
