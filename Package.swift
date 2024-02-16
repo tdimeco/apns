@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "apns",
     platforms: [
-        .macOS(.v14)
+        .macOS(.v13)
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.3.0"),
