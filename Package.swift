@@ -8,7 +8,7 @@ let package = Package(
         .macOS(.v14)
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.2.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.3.0"),
         .package(url: "https://github.com/swift-server-community/APNSwift.git", from: "5.0.0"),
         .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.0"),
     ],

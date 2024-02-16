@@ -1,6 +1,5 @@
 import Foundation
 import ArgumentParser
-import APNS
 
 @main
 struct APNS: AsyncParsableCommand {
