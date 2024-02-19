@@ -12,8 +12,7 @@ struct Send: ParsableCommand {
         subcommands: [
             SendAlert.self,
             SendBackground.self
-        ],
-        defaultSubcommand: SendAlert.self
+        ]
     )
 
     // MARK: Options
