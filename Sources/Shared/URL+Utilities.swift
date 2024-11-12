@@ -1,7 +1,7 @@
 import Foundation
 
 extension URL {
-    
+
     /// Read the content of the given file URL.
     ///
     /// - Returns: The file content as text.
