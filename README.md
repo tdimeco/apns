@@ -1,4 +1,4 @@
-# APNS
+# apns
 
 A command line tool to send push notifications using the Apple Push Notification Service.
 
@@ -82,6 +82,7 @@ The CLI auto updates with Homebrew.
 
 You can download a precompiled executable from the [Releases][releases] page.
 The installer package is signed and notarised by Apple, it just installs the `apns` executable into `/usr/local/bin`.
+
 To uninstall, just remove `/usr/local/bin/apns`.
 
 The CLI does not auto update in this case.
