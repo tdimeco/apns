@@ -65,14 +65,26 @@ For more information:
 apns send background --help
 ```
 
-## Install, Update and Uninstall
+## Installation
 
-The easiest way is to download a precompiled executable from the [Releases][releases] page.
+### Homebrew
+
+You can install the CLI using [Homebrew](https://brew.sh/):
+
+```bash
+brew install tdimeco/apps/apns
+```
+
+This is the recommended way to install the CLI.
+The CLI auto updates with Homebrew.
+
+### Manual
+
+You can download a precompiled executable from the [Releases][releases] page.
 The installer package is signed and notarised by Apple, it just installs the `apns` executable into `/usr/local/bin`.
-
-Alternatively, you can build the project yourself (see below).
-
 To uninstall, just remove `/usr/local/bin/apns`.
+
+The CLI does not auto update in this case.
 
 ## Build
 
