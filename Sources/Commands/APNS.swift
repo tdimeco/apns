@@ -2,7 +2,9 @@ import Foundation
 import ArgumentParser
 
 // App version constant
-private let APP_VERSION = "1.0.0"
+private let APP_VERSION = "1.0.1"
+// App homepage constant
+private let APP_HOMEPAGE  = "https://github.com/tdimeco/apns"
 
 @main
 struct APNS: AsyncParsableCommand {
@@ -39,7 +41,7 @@ struct APNS: AsyncParsableCommand {
                 APNS version \(APP_VERSION)
 
                 For more information about the APNS command, go to:
-                https://github.com/tdimeco/apns
+                \(APP_HOMEPAGE)
                 """)
         } else if showVersion {
             throw CleanExit.message(APP_VERSION)
