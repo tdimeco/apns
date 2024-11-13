@@ -20,23 +20,32 @@ struct SendBackground: AsyncParsableCommand {
 
     func run() async throws {
 
+        // Cleanup function
+        func cleanup() async throws {
+            try await client.shutdown()
+        }
+
         // Create the APNS client
         let client = try await APNSClient(options: targetOptions)
 
-        // Defer shutdown
-        defer {
-            try? client.syncShutdown()
+        // Send the notification
+        do {
+            try await client.sendBackgroundNotification(
+                .init(
+                    expiration: .immediately,
+                    topic: targetOptions.topic,
+                    payload: payloadOptions.decodedPayload()
+                ),
+                deviceToken: targetOptions.deviceToken
+            )
+        } catch {
+            // Cleanup and rethrow
+            try await cleanup()
+            throw error
         }
 
-        // Send the notification
-        try await client.sendBackgroundNotification(
-            .init(
-                expiration: .immediately,
-                topic: targetOptions.topic,
-                payload: payloadOptions.decodedPayload()
-            ),
-            deviceToken: targetOptions.deviceToken
-        )
+        // Cleanup
+        try await cleanup()
 
         // Exit the command
         throw CleanExit.message("Background push notification has been sent successfully!")

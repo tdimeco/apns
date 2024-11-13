@@ -51,28 +51,37 @@ struct SendAlert: AsyncParsableCommand {
         // Create the APNS client
         let client = try await APNSClient(options: targetOptions)
 
-        // Defer shutdown
-        defer {
-            try? client.syncShutdown()
+        // Cleanup function
+        func cleanup() async throws {
+            try await client.shutdown()
         }
 
         // Send the notification
-        try await client.sendAlertNotification(
-            .init(
-                alert: .init(
-                    title: alertOptions.title.map { .raw($0) },
-                    subtitle: alertOptions.subtitle.map { .raw($0) },
-                    body: alertOptions.body.map { .raw($0) },
-                    launchImage: nil
+        do {
+            try await client.sendAlertNotification(
+                .init(
+                    alert: .init(
+                        title: alertOptions.title.map { .raw($0) },
+                        subtitle: alertOptions.subtitle.map { .raw($0) },
+                        body: alertOptions.body.map { .raw($0) },
+                        launchImage: nil
+                    ),
+                    expiration: .immediately,
+                    priority: .immediately,
+                    topic: targetOptions.topic,
+                    payload: payloadOptions.decodedPayload(),
+                    sound: alertOptions.isSoundEnable ? .default : nil
                 ),
-                expiration: .immediately,
-                priority: .immediately,
-                topic: targetOptions.topic,
-                payload: payloadOptions.decodedPayload(),
-                sound: alertOptions.isSoundEnable ? .default : nil
-            ),
-            deviceToken: targetOptions.deviceToken
-        )
+                deviceToken: targetOptions.deviceToken
+            )
+        } catch {
+            // Cleanup and rethrow
+            try await cleanup()
+            throw error
+        }
+
+        // Cleanup
+        try await cleanup()
 
         // Exit the command
         throw CleanExit.message("Alert push notification has been sent successfully!")

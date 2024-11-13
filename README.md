@@ -2,6 +2,8 @@
 
 A command line tool to send push notifications using the Apple Push Notification Service.
 
+Compatible with macOS 13+
+
 ## Documentation
 
 ### Send alert notifications
@@ -76,7 +78,7 @@ To uninstall, just remove `/usr/local/bin/apns`.
 
 ### Requirements
 
-- Xcode 15+ with Swift 5.9
+- Xcode 15.4+ with Swift 5.10
 
 ### Build for local deployment
 
