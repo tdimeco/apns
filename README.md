@@ -85,13 +85,19 @@ To uninstall, just remove `/usr/local/bin/apns`.
 Build the executable using:
 
 ```shell
-swift build -c release
+make
 ```
 
-Then move the `.build/release/apns` executable to one of your $PATH directory, for example:
+Then move the `.build/release/apns` executable to one of your $PATH directory. You can run `make install` to do it for you in the `/usr/local/bin/` directory:
 
 ```shell
-sudo cp .build/release/apns /usr/local/bin
+sudo make install
+```
+
+To uninstall, just run:
+
+```shell
+sudo make uninstall
 ```
 
 ### Build for public distribution
@@ -99,8 +105,10 @@ sudo cp .build/release/apns /usr/local/bin
 For distribution, build the universal fat-executable using:
 
 ```shell
-swift build -c release --arch arm64 --arch x86_64
+make build-universal
 ```
+
+The universal executable is located at `.build/apple/Products/Release/apns`.
 
 This allows the executable to run on both Intel and Apple Silicon Macs.
 
