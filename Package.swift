@@ -3,9 +3,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "apns",
+    name: "apns-cli",
     platforms: [
         .macOS(.v13)
+    ],
+    products: [
+        .executable(name: "apns", targets: ["apns-cli"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.3.0"),
@@ -14,7 +17,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "apns",
+            name: "apns-cli",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "APNS", package: "apnswift"),
