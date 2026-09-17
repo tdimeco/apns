@@ -6,7 +6,7 @@ struct SendAlert: AsyncParsableCommand {
 
     // MARK: Configuration
 
-    static var configuration = CommandConfiguration(
+    static let configuration = CommandConfiguration(
         commandName: "alert",
         abstract: "Send a user visible push notification."
     )

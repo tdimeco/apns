@@ -11,7 +11,7 @@ struct APNS: AsyncParsableCommand {
 
     // MARK: Configuration
 
-    static var configuration = CommandConfiguration(
+    static let configuration = CommandConfiguration(
         commandName: "apns",
         abstract: "A command line tool to send push notifications using the Apple Push Notification Service.",
         subcommands: [

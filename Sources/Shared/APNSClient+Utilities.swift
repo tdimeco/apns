@@ -15,7 +15,7 @@ extension APNSClient<JSONDecoder, JSONEncoder> {
         self.init(
             configuration: .init(
                 authenticationMethod: .jwt(
-                    privateKey: try .loadFrom(string: privateKey),
+                    privateKey: try .init(pemRepresentation: privateKey),
                     keyIdentifier: options.keyId,
                     teamIdentifier: options.teamId
                 ),

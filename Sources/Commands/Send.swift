@@ -1,12 +1,11 @@
 import Foundation
 import ArgumentParser
-import AnyCodable
 
 struct Send: ParsableCommand {
 
     // MARK: Configuration
 
-    static var configuration = CommandConfiguration(
+    static let configuration = CommandConfiguration(
         commandName: "send",
         abstract: "Send a push notification to a device.",
         subcommands: [
@@ -62,10 +61,10 @@ struct Send: ParsableCommand {
         @Argument(help: "The notification payload (JSON formatted).")
         var payload: String?
 
-        func decodedPayload() throws -> [String: AnyCodable] {
+        func decodedPayload() throws -> [String: JSONValue] {
             guard let payload else { return [:] }
             let data = payload.data(using: .utf8) ?? Data()
-            return try JSONDecoder().decode([String: AnyCodable].self, from: data)
+            return try JSONDecoder().decode([String: JSONValue].self, from: data)
         }
     }
 }

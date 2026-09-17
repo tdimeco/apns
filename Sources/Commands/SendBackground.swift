@@ -6,7 +6,7 @@ struct SendBackground: AsyncParsableCommand {
 
     // MARK: Configuration
 
-    static var configuration = CommandConfiguration(
+    static let configuration = CommandConfiguration(
         commandName: "background",
         abstract: "Send a background push notification."
     )
@@ -20,13 +20,13 @@ struct SendBackground: AsyncParsableCommand {
 
     func run() async throws {
 
+        // Create the APNS client
+        let client = try await APNSClient(options: targetOptions)
+
         // Cleanup function
         func cleanup() async throws {
             try await client.shutdown()
         }
-
-        // Create the APNS client
-        let client = try await APNSClient(options: targetOptions)
 
         // Send the notification
         do {

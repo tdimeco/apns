@@ -2,7 +2,7 @@
 
 A command line tool to send push notifications using the Apple Push Notification Service.
 
-Compatible with macOS 13+
+Compatible with macOS 14+ (Sonoma).
 
 ## Documentation
 
@@ -91,7 +91,7 @@ The CLI does not auto update in this case.
 
 ### Requirements
 
-- Xcode 15.4+ with Swift 5.10
+- Xcode 27.0+ with Swift 6.4
 
 ### Build for local deployment
 
