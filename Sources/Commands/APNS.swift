@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 
 // App version constant
-private let APP_VERSION = "1.0.1"
+private let APP_VERSION = "1.0.2"
 // App homepage constant
 private let APP_HOMEPAGE  = "https://github.com/tdimeco/apns"
 
