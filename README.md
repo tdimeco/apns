@@ -121,7 +121,7 @@ For distribution, build the universal fat-executable using:
 make build-universal
 ```
 
-The universal executable is located at `.build/apple/Products/Release/apns`.
+The universal executable is located at `.build/release/apns`.
 
 This allows the executable to run on both Intel and Apple Silicon Macs.
 
